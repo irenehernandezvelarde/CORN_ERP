@@ -1,0 +1,32 @@
+OBJECT Table 50036 taulaMenu
+{
+  OBJECT-PROPERTIES
+  {
+    Date=06/03/23;
+    Time=17:48:31;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+  }
+  FIELDS
+  {
+    { 1   ;   ;codi                ;Integer        }
+    { 2   ;   ;descripcio          ;Text100        }
+  }
+  KEYS
+  {
+    {    ;codi                                    ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+

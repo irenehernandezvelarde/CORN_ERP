@@ -1,0 +1,93 @@
+OBJECT Codeunit 50037 insertarDatosMenu
+{
+  OBJECT-PROPERTIES
+  {
+    Date=06/03/23;
+    Time=18:17:22;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    OnRun=BEGIN
+            EVALUATE(Menu, Window.InputBox('1 - Inserci¢n de datos', 'Men£ Opcions','',100,100));
+            CASE Menu OF
+              '1':
+                BEGIN
+                  //Esborrem dades bbdd Articulos
+                  menuTable.DELETEALL;
+
+                  //Insertem Linia 1 Articulos
+                  menuTable.codi := 1;
+                  menuTable.descripcio := 'Consulta taula usuaris';
+                  menuTable.INSERT;
+
+                  //Mostrem Linia Insertada
+                  MeuDialeg.OPEN('Insert Taula Menu\Codi menu #1######' + '\Descripci¢: #2######');
+                  MeuDialeg.UPDATE(1, menuTable.codi);
+                  MeuDialeg.UPDATE(2, menuTable.descripcio);
+                  menuTable.INIT;
+                  SLEEP(1000);
+
+                  //Insertem Linia 2 Articulos
+                  menuTable.codi := 2;
+                  menuTable.descripcio := 'Consulta transaccions un ususari';
+                  menuTable.INSERT;
+
+                  //Mostrem Linia Insertada
+
+                  MeuDialeg.UPDATE(1, menuTable.codi);
+                  MeuDialeg.UPDATE(2, menuTable.descripcio);
+                  menuTable.INIT;
+                  SLEEP(1000);
+
+                  //Insertem Linia 3 Articulos
+                  menuTable.codi := 3;
+                  menuTable.descripcio := 'Pagina amb tots els usuaris';
+                  menuTable.INSERT;
+
+                  //Mostrem Linia Insertada
+                  MeuDialeg.UPDATE(1, menuTable.codi);
+                  MeuDialeg.UPDATE(2, menuTable.descripcio);
+                  menuTable.INIT;
+                  SLEEP(1000);
+
+                  //Insertem Linia 4 Articulos
+                  menuTable.codi := 4;
+                  menuTable.descripcio := 'Estad¡stica del nombre de transaccions per dia';
+                  menuTable.INSERT;
+
+                  //Mostrem Linia Insertada
+                  MeuDialeg.UPDATE(1, menuTable.codi);
+                  MeuDialeg.UPDATE(2, menuTable.descripcio);
+                  menuTable.INIT;
+                  SLEEP(1000);
+
+                  //Insertem Linia 5 Articulos
+                  menuTable.codi := 5;
+                  menuTable.descripcio := 'Estad¡stica de la quantitat de transaccions per dia';
+                  menuTable.INSERT;
+
+                  //Mostrem Linia Insertada
+                  MeuDialeg.UPDATE(1, menuTable.codi);
+                  MeuDialeg.UPDATE(2, menuTable.descripcio);
+                  menuTable.INIT;
+                  SLEEP(1000);
+            END
+            END
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      Window@1106000004 : DotNet "'Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Microsoft.VisualBasic.Interaction" RUNONCLIENT;
+      Menu@1106000003 : Text;
+      menuTable@1106000002 : Record 50036;
+      MeuDialeg@1106000000 : Dialog;
+
+    BEGIN
+    END.
+  }
+}
+

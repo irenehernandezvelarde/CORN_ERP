@@ -1,0 +1,37 @@
+OBJECT Table 50002 transactions_table
+{
+  OBJECT-PROPERTIES
+  {
+    Date=06/03/23;
+    Time=16:13:25;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+  }
+  FIELDS
+  {
+    { 1   ;   ;id_transaction      ;Integer        }
+    { 2   ;   ;origin              ;Integer        }
+    { 3   ;   ;destiny             ;Integer        }
+    { 4   ;   ;token               ;Text200        }
+    { 5   ;   ;accepted            ;Integer        }
+    { 6   ;   ;timeSetup           ;DateTime       }
+    { 7   ;   ;timeAccept          ;DateTime       }
+  }
+  KEYS
+  {
+    {    ;id_transaction                          ;Clustered=Yes }
+  }
+  FIELDGROUPS
+  {
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+

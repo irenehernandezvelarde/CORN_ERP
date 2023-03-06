@@ -1,0 +1,87 @@
+OBJECT Codeunit 50034 MenuProyecto
+{
+  OBJECT-PROPERTIES
+  {
+    Date=06/03/23;
+    Time=18:46:29;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    OnRun=BEGIN
+              CR := 13; // Carriage Return - (Hex $0D)
+              LF := 10; // Line Feed - (Hex $0A)
+
+              Menu := Window.InputBox('1: Consulta taula dusuaris'+FORMAT(CR)+FORMAT(LF)
+                                      +'2: Consulta transaccions dun ususari'+FORMAT(CR)+FORMAT(LF),
+                                      'Menu Opcions', '', 100, 100);
+                        CASE Menu OF
+                          '1':
+                            BEGIN
+                              MESSAGE('Has escollit opci¢ 1');
+                              MeuDialeg.OPEN('Taula Usuaris\Nom Usuari #1######\Cognom usuari #2######\Email Usuari #3######\Balance Usuari #4######');
+                              WITH usuaris DO BEGIN
+                                REPEAT
+                                  MeuDialeg.UPDATE(1, usuaris.name);
+                                  MeuDialeg.UPDATE(2, usuaris.surname);
+                                  MeuDialeg.UPDATE(3, usuaris.email);
+                                  MeuDialeg.UPDATE(4, usuaris.balance);
+                                  SLEEP(1000);
+                                UNTIL NEXT = 0;
+                              END;
+                            END;
+                          '2':
+                            BEGIN
+                              MESSAGE('opc 2');
+                              EVALUATE(tel, Window.InputBox('1 -  Introdueix numero de telefon:'+FORMAT(CR)+FORMAT(LF),'Menu Opcions', '', 100, 100));
+                              MeuDialeg.OPEN('Usuaris:\Transaction origin: #1######\Transaction destination: #2######\Transaction accepted: #3######\Transaction time finish: #4######');
+                              ExisteUsuario := FALSE;
+                              WITH transaccions DO BEGIN
+                                SETCURRENTKEY(transaccions.timeSetup);
+                                ASCENDING(FALSE);
+                                IF FIND('-') THEN
+                                  REPEAT
+                                    IF transaccions.destiny = tel THEN BEGIN
+                                      MeuDialeg.UPDATE(1,transaccions.origin);
+                                      MeuDialeg.UPDATE(2,transaccions.destiny);
+                                      MeuDialeg.UPDATE(3,transaccions.accepted);
+                                      MeuDialeg.UPDATE(4,transaccions.timeSetup);
+                                      ExisteUsuario := TRUE;
+                                      SLEEP(3000);
+                                    END;
+                                  UNTIL NEXT = 0;
+                              END;
+                              MeuDialeg.CLOSE;
+                              IF ExisteUsuario = FALSE THEN BEGIN
+                                Window.MsgBox('No se encuentran transacciones',0,'Mensaje');
+                              END;
+                            END;
+                          ELSE
+                            BEGIN
+                              MESSAGE('ERROR, opcion incorrecta');
+                            END
+                      END;
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      Window@1106000003 : DotNet "'Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Microsoft.VisualBasic.Interaction" RUNONCLIENT;
+      Menu@1106000002 : Text[30];
+      CR@1106000001 : Char;
+      LF@1106000000 : Char;
+      userPage@1106000004 : Page 50035;
+      MeuDialeg@1106000005 : Dialog;
+      usuaris@1106000006 : Record 50003;
+      transaccions@1106000007 : Record 50002;
+      Menu2@1106000008 : Text[30];
+      tel@1106000009 : Integer;
+      ExisteUsuario@1106000010 : Boolean;
+
+    BEGIN
+    END.
+  }
+}
+

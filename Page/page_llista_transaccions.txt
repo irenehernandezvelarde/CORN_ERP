@@ -1,0 +1,50 @@
+OBJECT Page 50038 Llista_transaccions
+{
+  OBJECT-PROPERTIES
+  {
+    Date=09/03/23;
+    Time=16:48:25;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    SourceTable=Table50002;
+    PageType=List;
+  }
+  CONTROLS
+  {
+    { 1106000000;0;Container;
+                ContainerType=ContentArea }
+
+    { 1106000001;1;Group  ;
+                Name=Group;
+                GroupType=Repeater }
+
+    { 1106000002;2;Field  ;
+                SourceExpr=id_transaction }
+
+    { 1106000003;2;Field  ;
+                SourceExpr=origin }
+
+    { 1106000004;2;Field  ;
+                SourceExpr=destiny }
+
+    { 1106000005;2;Field  ;
+                SourceExpr=accepted }
+
+    { 1106000006;2;Field  ;
+                SourceExpr=timeSetup }
+
+    { 1106000007;2;Field  ;
+                SourceExpr=timeAccept }
+
+  }
+  CODE
+  {
+
+    BEGIN
+    END.
+  }
+}
+

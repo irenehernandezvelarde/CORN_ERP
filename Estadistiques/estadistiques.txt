@@ -1,0 +1,77 @@
+OBJECT Codeunit 50006 CornEstadisticaTransaccions
+{
+  OBJECT-PROPERTIES
+  {
+    Date=10/03/23;
+    Time=18:10:35;
+    Modified=Yes;
+    Version List=;
+  }
+  PROPERTIES
+  {
+    OnRun=BEGIN
+
+            MenuDialeg.OPEN('Dia: #1######\Quantitat transaccions:  #2######\Quantitat CORN:  #3######');
+
+            TransactionsAmount := 0;
+            CornAmount := 0;
+            CornAmountInteger := 0;
+            DayText := '';
+            DiaAnterior := '111';
+            PrimeraVez := TRUE;
+
+            WITH TransacctionTable DO BEGIN
+              IF FIND('-') THEN
+                REPEAT
+
+                  Date := DT2DATE(TransacctionTable.timeSetup);
+                  DateText := FORMAT(Date);
+
+                  DayText := FORMAT(DateText[1]);
+                  DayText := DayText + FORMAT(DateText[2]);
+
+                  IF (DiaAnterior <> DayText) AND (PrimeraVez = FALSE) THEN BEGIN
+                    MenuDialeg.UPDATE(1,DiaAnterior);
+                    MenuDialeg.UPDATE(2,TransactionsAmount);
+                    MenuDialeg.UPDATE(3,CornAmountInteger);
+                    TransactionsAmount := 0;
+                    CornAmountInteger := 0;
+                    SLEEP(5000);
+                  END;
+
+                  DiaAnterior := DayText;
+                  TransactionsAmount += 1;
+                  EVALUATE(CornAmount, TransacctionTable.quantity);
+                  CornAmountInteger += CornAmount;
+                  PrimeraVez := FALSE;
+                UNTIL NEXT = 0;
+            END;
+
+            MenuDialeg.UPDATE(1,DiaAnterior);
+            MenuDialeg.UPDATE(2,TransactionsAmount);
+            MenuDialeg.UPDATE(3,CornAmountInteger);
+            SLEEP(5000);
+            MenuDialeg.CLOSE;
+          END;
+
+  }
+  CODE
+  {
+    VAR
+      TransacctionTable@1106000000 : Record 50002;
+      TransactionsAmount@1106000001 : Integer;
+      CornAmount@1106000002 : Integer;
+      CornAmountInteger@1106000003 : Integer;
+      Window@1106000004 : DotNet "'Microsoft.VisualBasic, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'.Microsoft.VisualBasic.Interaction" RUNONCLIENT;
+      Date@1106000005 : Date;
+      DateText@1106000006 : Text;
+      DayText@1106000007 : Text;
+      MenuDialeg@1106000008 : Dialog;
+      DiaAnterior@1106000009 : Text;
+      PrimeraVez@1106000010 : Boolean;
+
+    BEGIN
+    END.
+  }
+}
+
